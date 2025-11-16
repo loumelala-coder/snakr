@@ -1,7 +1,6 @@
 from random import randint
 import pygame
 
-
 # Constants for field and grid sizes
 SCREEN_WIDTH, SCREEN_HEIGHT = 640, 480
 GRID_SIZE = 20
@@ -31,7 +30,7 @@ clock = pygame.time.Clock()
 
 class GameObject:
     """Base class for game objects."""
-    
+
     def __init__(self, body_color=BOARD_BACKGROUND_COLOR):
         """Initialize game object with position and color."""
         self.position = [SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2]
@@ -50,7 +49,7 @@ class GameObject:
 
 class Apple(GameObject):
     """Apple class for the snake to eat."""
-    
+
     def __init__(self):
         """Initialize apple with random position."""
         super().__init__(APPLE_COLOR)
@@ -70,7 +69,7 @@ class Apple(GameObject):
 
 class Snake(GameObject):
     """Snake class representing the player character."""
-    
+
     def __init__(self):
         """Initialize snake with starting position and direction."""
         super().__init__(SNAKE_COLOR)
@@ -100,9 +99,9 @@ class Snake(GameObject):
         new_x = (head[0] + self.direction[0] * GRID_SIZE) % SCREEN_WIDTH
         new_y = (head[1] + self.direction[1] * GRID_SIZE) % SCREEN_HEIGHT
         new_head = [new_x, new_y]
-        
+
         self.positions.insert(0, new_head)
-        
+
         if not self.grew:
             self.last = self.positions.pop()
         else:
@@ -117,12 +116,12 @@ class Snake(GameObject):
         # Draw body segments
         for position in self.positions[:-1]:
             self.draw_cell(position, self.body_color)
-        
+
         # Draw head
         head_rect = pygame.Rect(self.positions[0], (GRID_SIZE, GRID_SIZE))
         pygame.draw.rect(screen, self.body_color, head_rect)
         pygame.draw.rect(screen, BORDER_COLOR, head_rect, 1)
-        
+
         # Erase last segment if snake moved without growing
         if self.last and not self.grew:
             last_rect = pygame.Rect(self.last, (GRID_SIZE, GRID_SIZE))
@@ -153,23 +152,23 @@ def handle_keys(game_object):
 def main():
     """Main game function."""
     pygame.init()
-    
+
     # Create game objects
     snake = Snake()
     apple = Apple()
-    
+
     while True:
         clock.tick(SPEED)
-        
+
         # Handle user input
         handle_keys(snake)
-        
+
         # Update snake direction
         snake.update_direction()
-        
+
         # Move snake
         snake.move()
-        
+
         # Check for apple collision
         if snake.get_head_position() == apple.position:
             snake.grow()
@@ -177,12 +176,12 @@ def main():
             # Ensure apple doesn't appear on snake
             while apple.position in snake.positions:
                 apple.randomize_position()
-        
+
         # Check for self-collision
         if snake.check_collision():
             snake.reset()
             apple.randomize_position()
-        
+
         # Draw everything
         screen.fill(BOARD_BACKGROUND_COLOR)
         apple.draw()
