@@ -46,7 +46,9 @@ class GameObject:
 
     def draw(self) -> None:
         """Draw the game object. To be implemented in child classes."""
-        raise NotImplementedError("Method must be implemented in child class")
+        raise NotImplementedError(
+            'Method must be implemented in child class'
+        )
 
     def draw_cell(self, position: Position, color: Color) -> None:
         """Draw a single cell at given position with given color."""
@@ -64,7 +66,9 @@ class Apple(GameObject):
         self.occupied_positions: List[Position] = occupied_positions or []
         self.randomize_position()
 
-    def randomize_position(self, occupied_positions: List[Position] = None) -> None:
+    def randomize_position(
+        self, occupied_positions: List[Position] = None
+    ) -> None:
         """Set apple to random position on grid."""
         if occupied_positions is not None:
             self.occupied_positions = occupied_positions
@@ -92,7 +96,9 @@ class Snake(GameObject):
 
     def reset(self) -> None:
         """Reset snake to initial state."""
-        self.positions: List[Position] = [(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)]
+        self.positions: List[Position] = [
+            (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)
+        ]
         self.direction: Pointer = RIGHT
         self.next_direction: Pointer = None
         self.last: Position = None
