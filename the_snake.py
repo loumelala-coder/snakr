@@ -1,7 +1,5 @@
 from random import randint
-
 import pygame
-
 
 # Constants for field and grid sizes
 SCREEN_WIDTH, SCREEN_HEIGHT = 640, 480
